@@ -44,14 +44,14 @@ def main():
     currentYear=datetime.datetime.now().year
     st.title("Car Price Prediction")
     html_code="""
-    <div style="background-color:tomato;padding:10px">
+    <div style="background-color:purple;padding:10px">
     <h2 style="color:white;text-align:center">Streamlit Car Price Prediction ML App</h2>
     </div><br><br>
     """
     st.markdown(html_code,unsafe_allow_html=True)
-    
+
     # yearOfPurchase=st.text_input("Year Of Purchase","eg: "+str(currentYear))
-    yearOfPurchase=st.number_input("Year Of Purchase",currentYear)
+    yearOfPurchase=st.number_input("Year Of Purchase",value=currentYear,min_value=1950)
     presentPrice=st.number_input("Present Price(in lakhs)",help="Price in lakhs",min_value=0.5,value=1.0)
     kmsDriven=st.number_input("KMS Driven",min_value=0.0,value=0.0)
     
@@ -73,7 +73,8 @@ def main():
     if st.button("Calculate Selling Price"):
         # st.write([yearOfPurchase,presentPrice,kmsDriven,fuelCheckedValue,sellerCheckedValue,transmissionCheckedValue,ownerCheckedValue])
         predictedValueForSellingPrice=predict_output(yearOfPurchase,presentPrice,kmsDriven,fuelCheckedValue,sellerCheckedValue,transmissionCheckedValue,ownerCheckedValue)
-        st.write(predictedValueForSellingPrice)
+        st.success("Predicted Selling Price in Lakhs : "+
+        str(int((predictedValueForSellingPrice*10000))/10000))  #limiting to 4 decimal places
 
 if __name__=="__main__":
     main()
